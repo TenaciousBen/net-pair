@@ -10,7 +10,7 @@ namespace Calcutron.Core.Engine
 {
     public interface IStayCalculator
     {
-        Stay GetCheapest(int adults, int children, DateTime startDate, DateTime endDate);
+        Stay GetCheapest(int adults, bool isHoneymoon, DateTime startDate, DateTime endDate);
     }
 
     public class StayCalculator : IStayCalculator
@@ -24,7 +24,7 @@ namespace Calcutron.Core.Engine
             _specialOfferRepository = specialOfferRepository;
         }
 
-        public Stay GetCheapest(int adults, int children, DateTime startDate, DateTime endDate)
+        public Stay GetCheapest(int adults, bool isHoneymoon, DateTime startDate, DateTime endDate)
         {
             throw new NotImplementedException();
         }

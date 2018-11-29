@@ -23,9 +23,10 @@ namespace Calcutron.Console
         static async Task MainAsync(string[] args)
         {
             System.Console.WriteLine("Welcome to calcutron");
-            int adults = 0, children = 0;
-            DateTime startDate = DateTime.MinValue, endDate = DateTime.MaxValue;
-            var cheapestStay = StayCalculator.GetCheapest(adults, children, startDate, endDate);
+            int adults = PromptInt("How many adults are traveling?");
+            DateTime startDate = PromptDate("When are they traveling?"), endDate = PromptDate("When do they end their travel?");
+            bool isHoneymoon = PromptBoolean("Are they on honeymoon?");
+            var cheapestStay = StayCalculator.GetCheapest(adults, isHoneymoon, startDate, endDate);
             PrintStay(cheapestStay);
         }
 
@@ -36,8 +37,43 @@ namespace Calcutron.Console
             return response;
         }
 
+        static DateTime PromptDate(string prompt)
+        {
+            while (true)
+            {
+                var response = Prompt(prompt);
+                if (DateTime.TryParse(response, out var date)) return date;
+                System.Console.WriteLine("Please enter a valid date");
+            }
+        }
+
+        static int PromptInt(string prompt)
+        {
+            while (true)
+            {
+                var response = Prompt(prompt);
+                if (int.TryParse(response, out var number)) return number;
+                System.Console.WriteLine("Please enter a valid integer");
+            }
+        }
+
+        static bool PromptBoolean(string prompt)
+        {
+            while (true)
+            {
+                var response = Prompt(prompt);
+                if (bool.TryParse(response, out var boolean)) return boolean;
+                System.Console.WriteLine("Please enter true or false");
+            }
+        }
+
         static void PrintStay(Stay stay)
         {
+            if (stay == null)
+            {
+                System.Console.WriteLine("No stay could be found for your trip");
+                return;
+            }
             System.Console.WriteLine($"Staying for {stay.Nights} nights between {stay.StartDate.ToShortDateString()} to {stay.EndDate.ToShortDateString()}");
             System.Console.WriteLine($"Your stay is at {stay.CheapestRate.Name} and has {stay.ApplicableOffers.Count} offers applied for a total cost of £{stay.Price}");
         }
