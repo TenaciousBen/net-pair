@@ -51,6 +51,17 @@ namespace Calcutron.Core.Repositories
                     Value = 10
                 };
                 offers.Add(winterSaleSecondHalf);
+                var longStayDiscount = new SpecialOffer()
+                {
+                    ID = 4,
+                    MinStayInNights = 10,
+                    ValidFrom = new DateTime(2018, 01, 01),
+                    ValidTo = new DateTime(2018, 12, 31),
+                    IsAbsolute = false,
+                    SpecialOfferDiscountBasis = SpecialOfferDiscountBasis.Stay,
+                    Value = 10
+                };
+                offers.Add(longStayDiscount);
                 return offers;
             });
         }
